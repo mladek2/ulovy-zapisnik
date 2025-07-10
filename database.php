@@ -1,10 +1,10 @@
 <?php
 // Připojení k databázi na Wedosu
 
-$host = 'md419.wedos.net';
+$host = '';
 $dbname = 'd378503_uly';
-$user = 'w378503_uly';
-$pass = 'eWn9AB78';
+$user = '';
+$pass = ;
 
 try {
     $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8mb4", $user, $pass);
