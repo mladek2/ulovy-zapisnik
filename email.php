@@ -1,8 +1,8 @@
 <?php
 return [
     'host' => 'wes1-smtp.wedos.net',
-    'username' => 'ucty@ulovyzapisnik.cz',
-    'password' => 'Connect3!',
+    'username' => '',
+    'password' => '',
     'port' => 465,
     'encryption' => 'ssl',
     'from_email' => 'ucty@ulovyzapisnik.cz',
