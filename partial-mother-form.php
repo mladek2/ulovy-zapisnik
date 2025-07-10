@@ -58,11 +58,13 @@ function toggleMotherForm() {
                     $selected = (isset($mother['puvod']) && $mother['puvod'] === $puv) ? 'selected' : '';
                     echo "<option value=\"$puv\" $selected>$puv</option>";
                 }
-                 <button type="submit" name="delete_mother" value="1" class="btn btn-danger" onclick="return confirm('Opravdu chcete matku odstranit?');">Odstranit matku</button>
+                
                 
                 ?>
             </select>
         </div>
-        
+         <div class="mb-3">
+         <button type="submit" name="delete_mother" value="1" class="btn btn-danger" onclick="return confirm('Opravdu chcete matku odstranit?');">Odstranit matku</button>
+         </div>
     </div>
 </div>

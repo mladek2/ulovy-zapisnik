@@ -19,8 +19,8 @@ if ($hasData) {
         $newMotherId = $motherId;
     } else {
         // INSERT nové matky
-         $stmt = $pdo->prepare("INSERT INTO matky (cislo_matky, barva, rok_narozeni, puvod, hive_id) VALUES (?, ?, ?, ?, ?)");
-        $stmt->execute([$cislo, $barva, $rok ?: null, $puvod, $hiveId]);
+         $stmt = $pdo->prepare("INSERT INTO matky (cislo_matky, barva, rok_narozeni, puvod) VALUES (?, ?, ?, ?)");
+        $stmt->execute([$cislo, $barva, $rok ?: null, $puvod]);
         $newMotherId = $pdo->lastInsertId();
     }
 }
