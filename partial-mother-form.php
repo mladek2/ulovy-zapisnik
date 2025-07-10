@@ -25,7 +25,10 @@ function toggleMotherForm() {
         <?php if (isset($mother)): ?>
             <input type="hidden" name="mother_id" value="<?= htmlspecialchars($mother['id']) ?>">
         <?php endif; ?>
-
+ <div class="mb-3">
+        <label>Číslo matky</label>
+        <input type="number" name="cislo_matky" class="form-control" value="<?= htmlspecialchars($mother['cislo_matky'] ?? '') ?>">
+    </div>
         <div class="mb-3">
             <label class="form-label">Barva značky</label>
             <select name="barva" class="form-select">
@@ -55,8 +58,11 @@ function toggleMotherForm() {
                     $selected = (isset($mother['puvod']) && $mother['puvod'] === $puv) ? 'selected' : '';
                     echo "<option value=\"$puv\" $selected>$puv</option>";
                 }
+                 <button type="submit" name="delete_mother" value="1" class="btn btn-danger" onclick="return confirm('Opravdu chcete matku odstranit?');">Odstranit matku</button>
+                
                 ?>
             </select>
         </div>
+        
     </div>
 </div>
