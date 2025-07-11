@@ -45,7 +45,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stav_matky = isset($_POST['queen_seen']) ? 1 : 0;
     require_once 'mother-handler.php';
 //include 'mother-handler.php';
-$finalMotherId = $newMotherId ?: $hive['matka_id'] ?? null;
+if (isset($_POST['delete_mother'])) {
+    $finalMotherId = null;
+} else {
+    $finalMotherId = $newMotherId ?: $hive['matka_id'] ?? null;
+}
     $stmt = $pdo->prepare("UPDATE hives SET 
         location_id = ?, 
         puvod_vcelstva = ?, 
