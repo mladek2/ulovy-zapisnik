@@ -21,6 +21,9 @@ $success = '';
 $error = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+  require_once 'mother-handler.php';
+include 'mother-handler.php';
+$finalMotherId = $newMotherId;
     $locationId = $_POST['location_id'] ?? null;
     $puvod = $_POST['puvod_vcelstva'] ?? '';
     $created_at = $_POST['created_at'] ?? null;
@@ -31,12 +34,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $mrizka = isset($_POST['materi_mrizka']) ? 1 : 0;
     $vynos = floatval($_POST['medny_vynos'] ?? 0);
     $name = trim($_POST['name'] ?? '');
-
+    
     if (!$locationId) {
         $error = 'Vyberte stanoviště.';
     } else {
-        $stmt = $pdo->prepare("INSERT INTO hives (name, location_id, puvod_vcelstva, created_at, ramkova_mira, pocet_nastavku, krmitko, typ_krmitka, materi_mrizka, medny_vynos, user_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-        $stmt->execute([$name, $locationId, $puvod, $created_at, $ramkova_mira, $nastavky, $krmitko, $typ_krmitka, $mrizka, $vynos, $_SESSION['user_id']]);
+        $stmt = $pdo->prepare("INSERT INTO hives (name, location_id, puvod_vcelstva, created_at, ramkova_mira, pocet_nastavku, krmitko, typ_krmitka, materi_mrizka, medny_vynos, user_id, matka_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        $stmt->execute([$name, $locationId, $puvod, $created_at, $ramkova_mira, $nastavky, $krmitko, $typ_krmitka, $mrizka, $vynos, $_SESSION['user_id'], $finalMotherId]);
 
         $hiveId = $pdo->lastInsertId();
 
@@ -46,6 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         $success = 'Úl byl úspěšně vytvořen.';
     }
+   
 }
 ?>
 <!DOCTYPE html>
@@ -95,7 +99,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         <div class="mb-3">
             <label class="form-label">Datum založení</label>
-            <input type="date" name="created_at" class="form-control">
+            <input type="date" name="created_at" value="<?= htmlspecialchars($hive['created_at'] ?? date('Y-m-d')) ?>" 
+       class="form-control">
         </div>
 
         <div class="mb-3">
@@ -127,7 +132,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <label class="form-label">Medný výnos (kg)</label>
             <input type="number" step="0.1" name="medny_vynos" class="form-control">
         </div>
-
+ <?php include 'partial-mother-form.php'; ?>
         <button type="submit" class="btn btn-primary">Vytvořit úl</button>
     </form>
 </div>

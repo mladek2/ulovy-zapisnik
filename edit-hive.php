@@ -1,7 +1,7 @@
 <?php
 session_start();
 require_once __DIR__ . '/config/database.php';
-require_once 'mother-handler.php';
+
 if (!isset($_SESSION['user_id'])) {
     header('Location: login.php');
     exit;
@@ -42,7 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $zasoby = $_POST['zasoby'] ?? 0;
     $plod_z = $_POST['plod_zavickovany'] ?? 0;
     $plod_n = $_POST['plod_nezavickovany'] ?? 0;
-    $stav_matky = $_POST['queen_seen'] ?? null;
+    $stav_matky = isset($_POST['queen_seen']) ? 1 : 0;
     require_once 'mother-handler.php';
 include 'mother-handler.php';
 $finalMotherId = $newMotherId ?: $hive['matka_id'] ?? null;
@@ -149,8 +149,10 @@ $finalMotherId = $newMotherId ?: $hive['matka_id'] ?? null;
             <input type="number" name="plod_nezavickovany" step="0.1" value="<?= htmlspecialchars($hive['plod_nezavickovany']) ?>" class="form-control">
         </div>
         <div class="mb-3">
-            <label>Stav matky</label>
-            <input type="text" name="queen_seen" value="<?= htmlspecialchars($hive['queen_seen']) ?>" class="form-control">
+           <div class="form-check mb-3">
+    <input type="checkbox" class="form-check-input" id="queen_seen" name="queen_seen" value="1" <?= $hive['queen_seen'] ? 'checked' : '' ?>>
+    <label class="form-check-label" for="queen_seen">Matka byla viděna při poslední kontrole</label>
+</div>
         </div>
        <?php include 'partial-mother-form.php'; ?>
         <button type="submit" class="btn btn-primary">Uložit změny</button>

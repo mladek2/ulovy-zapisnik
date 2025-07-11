@@ -1,6 +1,14 @@
 <?php
 // Tento soubor se vkládá do jiných formulářů (např. create/edit-hive.php)
 // Očekává proměnné: $mother (asociativní pole nebo null)
+$mother = null;
+ $matka_existuje = null;
+if (isset($hive['matka_id'])) {
+    $stmt = $pdo->prepare("SELECT * FROM matky WHERE id = ?");
+    $stmt->execute([$hive['matka_id']]);
+    $mother = $stmt->fetch();
+    $matka_existuje=1;
+}
 ?>
 
 <style>
@@ -34,7 +42,7 @@ function toggleMotherForm() {
             <select name="barva" class="form-select">
                 <option value="">-- Nevybráno --</option>
                 <?php
-                $barvy = ['Bílá', 'Žlutá', 'Červená', 'Zelená', 'Modrá'];
+                $barvy = ['Bílá', 'Žlutá', 'Červená', 'Zelená', 'Modrá', 'Neznačená'];
                 foreach ($barvy as $barva) {
                     $selected = (isset($mother['barva']) && $mother['barva'] === $barva) ? 'selected' : '';
                     echo "<option value=\"$barva\" $selected>$barva</option>";
@@ -45,7 +53,7 @@ function toggleMotherForm() {
 
         <div class="mb-3">
             <label class="form-label">Rok narození</label>
-            <input type="number" name="rok_narozeni" class="form-control" min="2000" max="<?= date('Y') ?>" value="<?= htmlspecialchars($mother['rok_narozeni'] ?? '') ?>">
+            <input type="number" name="rok_narozeni" class="form-control" min="2000" max="<?= date('Y') ?>" value="<?= htmlspecialchars($mother['rok_narozeni'] ?? date('Y')) ?>">
         </div>
 
         <div class="mb-3">
@@ -63,8 +71,14 @@ function toggleMotherForm() {
                 ?>
             </select>
         </div>
+        <?php
+        if($matka_existuje == 1){
+        ?>
          <div class="mb-3">
          <button type="submit" name="delete_mother" value="1" class="btn btn-danger" onclick="return confirm('Opravdu chcete matku odstranit?');">Odstranit matku</button>
          </div>
+         <?php
+         }
+         ?>
     </div>
 </div>

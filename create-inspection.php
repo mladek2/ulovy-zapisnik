@@ -100,7 +100,8 @@ $autoSelectHive = $_GET['hive_id'] ?? '';
 
         <div class="mb-3">
             <label>Datum</label>
-            <input type="date" name="inspection_date" class="form-control" required>
+            <input type="date" name="inspection_date" value="<?= htmlspecialchars($hive['created_at'] ?? date('Y-m-d')) ?>" 
+       class="form-control"> required>
         </div>
 
         <div class="form-check mb-2">
