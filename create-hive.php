@@ -1,7 +1,7 @@
 <?php
 session_start();
 require_once __DIR__ . '/config/database.php';
-require_once 'mother-handler.php';
+//require_once 'mother-handler.php';
 //require_once __DIR__ . '/helpers/permissions.php';
 
 if (!isset($_SESSION['user_id'])) {
@@ -22,7 +22,7 @@ $error = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   require_once 'mother-handler.php';
-include 'mother-handler.php';
+//include 'mother-handler.php';
 $finalMotherId = $newMotherId;
     $locationId = $_POST['location_id'] ?? null;
     $puvod = $_POST['puvod_vcelstva'] ?? '';

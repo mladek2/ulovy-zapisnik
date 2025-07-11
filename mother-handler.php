@@ -25,8 +25,13 @@ if ($hasData) {
     }
 }
 if (isset($_POST['delete_mother']) && $motherId) {
-    $stmt = $pdo->prepare("DELETE FROM matky WHERE id = ?");
-    $stmt->execute([$motherId]);
+   
+  $pdo->prepare("UPDATE hives SET matka_id = NULL WHERE matka_id = ?")->execute([$motherId]);
+
+    // Pak teprve smaž matku
+    $deleteStmt = $pdo->prepare("DELETE FROM matky WHERE id = ?");
+    $deleteStmt->execute([$motherId]);
+
     $newMotherId = null;
 }
 // $newMotherId můžeš pak použít v insertu/aktu úlu
